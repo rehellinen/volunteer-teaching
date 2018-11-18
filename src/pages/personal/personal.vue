@@ -8,14 +8,20 @@
       // 个人信息栏
 
       // 发布活动
-      div.button-container
+      div.button-container(@click="postActivity")
         img(src="__IMAGE__/icon/personal@postAct.png")
         p 发布活动
 
       // 发布活动
 
+      // 创建组织
+      div.button-container(@click="setupOrg")
+        img(src="__IMAGE__/icon/personal@org.png")
+        p {{flag}}
+      // 创建组织
+
       // 我参加的活动
-      div.button-container
+      div.button-container(@click="toActivityList")
         img(src="__IMAGE__/icon/personal@myjoin.png")
         p 我参加的
       // 参加的活动
@@ -32,11 +38,7 @@
         p 我的视频
       // 我的视
 
-      // 创建组织
-      div.button-container
-        img(src="__IMAGE__/icon/personal@org.png")
-        p {{flag}}
-      // 创建组织
+
 </template>
 
 <script>
@@ -58,6 +60,7 @@
       })
       User.loadOrg().then(res => {
         if (res.OID) {
+          wx.setStorageSync('myOrg', res)
           wx.setStorageSync('hasOrg', true)
         }
       }).catch(() => {
@@ -74,7 +77,7 @@
     methods: {
       toActivityList () {
         wx.navigateTo({
-          url: '../activity-list/main'
+          url: '../all-activities/main'
         })
       },
       setupOrg () {
